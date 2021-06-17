@@ -45,6 +45,7 @@
                     <tbody>
                     <% for (Candidate can : Store.instOf().findAllCandidates()) { %>
                     <tr>
+                        <td><%= can.getId() %></td>
                         <td><%= can.getName() %></td>
                     </tr>
                     <% } %>
