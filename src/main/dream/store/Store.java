@@ -5,6 +5,7 @@ import main.dream.model.Post;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -26,17 +27,35 @@ public class Store {
     }
 
     public void save(Post post) {
-        post.setId(POST_ID.incrementAndGet());
+        if (post.getId() == 0) {
+            post.setId(POST_ID.incrementAndGet());
+        }
         posts.put(post.getId(), post);
     }
 
     public void save(Candidate candidate) {
-        candidate.setId(CANDIDATE_ID.incrementAndGet());
+        if (candidate.getId() == 0) {
+            candidate.setId(CANDIDATE_ID.incrementAndGet());
+        }
         candidates.put(candidate.getId(), candidate);
     }
 
     public static Store instOf() {
         return INST;
+    }
+
+    public Post findPostById(Integer id) {
+        if (!posts.containsKey(id)) {
+            throw new NoSuchElementException("Post with " + id + "id not found");
+        }
+        return posts.get(id);
+    }
+
+    public Candidate findCandidateById(Integer id) {
+        if (!candidates.containsKey(id)) {
+            throw new NoSuchElementException("Post with " + id + "id not found");
+        }
+        return candidates.get(id);
     }
 
     public Collection<Post> findAllPosts() {
