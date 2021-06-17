@@ -6,7 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="main.dream.store.Store" %>
 <%@ page import="main.dream.model.Candidate" %>
 <%@ page import="java.util.Collection" %>
 <!doctype html>
@@ -51,7 +50,7 @@
                             <a href="<%=request.getContextPath()%>/candidate/edit.jsp?id=<%=can.getId()%>">
                                 <i class="fa fa-edit mr-3"></i>
                             </a>
-                            <%=can.getName()%>
+                            <%= can.getName()%>
                         </td>
                     </tr>
                     <% } %>
