@@ -42,16 +42,30 @@
                     <thead>
                     <tr>
                         <th scope="col">Названия</th>
+                        <th scope="col">Фото</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${candidates}" var="can">
                         <tr>
                             <td>
+                                <!-- Это кнопка для редактивроания -->
                                 <a href='<c:url value="/candidate/edit.jsp?id=${can.id}"/>'>
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
+                                <!-- Это имя кандидата-->
                                 <c:out value="${can.name}"/>
+                            </td>
+                            <td>
+                                <!-- Это кнопка для добавления картинка-->
+                                <a href='<c:url value="/upload?id=${can.id}"/>'>
+                                    <i> Добавить </i>
+                                </a>
+                                <h6> </h6>
+                                <!-- Это кнопка для удаления картинки-->
+                                <a href='<c:url value="/candidate/edit.jsp?id=${can.id}"/>'>
+                                    <i> Удалить </i>
+                                </a>
                             </td>
                         </tr>
                     </c:forEach>
