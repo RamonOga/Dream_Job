@@ -16,13 +16,24 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class UploadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<String> images = new ArrayList<>();
-        for (File name : new File("C:\\projects\\files\\images").listFiles()) {
-            images.add(name.getName());
+        String folder = "E:\\projects\\files\\images"
+                + File.separator
+                + "user_"
+                + req.getParameter("id");
+        File folderFile = new File(folder);
+        if (!folderFile.exists()) {
+            folderFile.mkdir();
+        }
+        for (File name : new File(folder).listFiles()) {
+            if (!name.isDirectory()) {
+                images.add(name.getName());
+            }
         }
         req.setAttribute("images", images);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/upload.jsp");
@@ -38,13 +49,17 @@ public class UploadServlet extends HttpServlet {
         ServletFileUpload upload = new ServletFileUpload(factory);
         try {
             List<FileItem> items = upload.parseRequest(req);
-            File folder = new File("C:\\projects\\files\\images");
+            File folder = new File("E:\\projects\\files\\images"
+                                            + File.separator
+                                            + "user_"
+                                            + req.getParameter("id"));
             if (!folder.exists()) {
                 folder.mkdir();
             }
+            String id = req.getParameter("id") + "_";
             for (FileItem item : items) {
                 if (!item.isFormField()) {
-                    File file = new File(folder + File.separator + item.getName());
+                    File file = new File(folder + File.separator + id +  item.getName());
                     try (FileOutputStream out = new FileOutputStream(file)) {
                         out.write(item.getInputStream().readAllBytes());
                     }

@@ -58,7 +58,7 @@
                             </td>
                             <td>
                                 <!-- Это кнопка для добавления картинка-->
-                                <a href='<c:url value="/PhotoUpload.jsp?id=${can.id}"/>'>
+                                <a href='<c:url value="/upload?id=${can.id}"/>'>
                                     <i> Добавить </i>
                                 </a>
                                 <h6> </h6>

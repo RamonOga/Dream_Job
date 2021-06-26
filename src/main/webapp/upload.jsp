@@ -19,6 +19,7 @@
 </head>
 <body>
 
+<% String id = request.getParameter("id");%>
 <div class="container">
     <table class="table">
         <thead>
@@ -39,7 +40,7 @@
         </tbody>
     </table>
     <h2>Upload image</h2>
-    <form action="<c:url value='/upload'/>" method="post" enctype="multipart/form-data">
+    <form action="<c:url value='/upload?id='/><%=id%>" method="post" enctype="multipart/form-data">
         <div class="checkbox">
             <input type="file" name="file">
         </div>
