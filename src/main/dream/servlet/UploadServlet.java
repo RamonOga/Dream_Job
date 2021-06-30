@@ -1,5 +1,7 @@
 package main.dream.servlet;
 
+import main.dream.model.Candidate;
+import main.dream.store.Store;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -16,13 +18,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class UploadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<String> images = new ArrayList<>();
-        String folder = "E:\\projects\\files\\images"
+        String folder = "c:\\projects\\files\\images"
                 + File.separator
                 + "user_"
                 + req.getParameter("id");
@@ -49,22 +50,29 @@ public class UploadServlet extends HttpServlet {
         ServletFileUpload upload = new ServletFileUpload(factory);
         try {
             List<FileItem> items = upload.parseRequest(req);
-            File folder = new File("E:\\projects\\files\\images"
+            File folder = new File("c:\\projects\\files\\images"
                                             + File.separator
                                             + "user_"
                                             + req.getParameter("id"));
             if (!folder.exists()) {
                 folder.mkdir();
             }
-            String id = req.getParameter("id") + "_";
+
+            Store store = Store.instOf();
+            String id = req.getParameter("id");
+            Candidate candidate = store.findCandidateById(Integer.parseInt(id));
+
             for (FileItem item : items) {
                 if (!item.isFormField()) {
-                    File file = new File(folder + File.separator + id +  item.getName());
+                    File file = new File(folder + File.separator + id + "_" +  item.getName());
+                    store.addCandidatePhoto(candidate, file);
                     try (FileOutputStream out = new FileOutputStream(file)) {
                         out.write(item.getInputStream().readAllBytes());
                     }
                 }
             }
+
+
         } catch (FileUploadException e) {
             e.printStackTrace();
         }

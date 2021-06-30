@@ -29,6 +29,15 @@
     <servlet-name>UploadServlet</servlet-name>
     <servlet-class>main.dream.servlet.UploadServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>DeleteServlet</servlet-name>
+    <servlet-class>main.dream.servlet.DeleteServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>DeleteServlet</servlet-name>
+    <url-pattern>/delete</url-pattern>
+  </servlet-mapping>
 
   <servlet-mapping>
     <servlet-name>DownloadServlet</servlet-name>

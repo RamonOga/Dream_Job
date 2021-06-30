@@ -49,12 +49,17 @@
                     <c:forEach items="${candidates}" var="can">
                         <tr>
                             <td>
-                                <!-- Это кнопка для редактивроания -->
-                                <a href='<c:url value="/candidate/edit.jsp?id=${can.id}"/>'>
-                                    <i class="fa fa-edit mr-3"></i>
-                                </a>
                                 <!-- Это имя кандидата-->
                                 <c:out value="${can.name}"/>
+                                <!-- Это кнопка для редактивроания -->
+                                <a href='<c:url value="/candidate/edit.jsp?id=${can.id}"/>'>
+                                    <i> Редактировать </i>
+                                </a>
+                                 \
+                                <a href='<c:url value="/candidate/delete.jsp?id=${can.id}"/>'>
+                                    <i> Удалить </i>
+                                </a>
+
                             </td>
                             <td>
                                 <!-- Это кнопка для добавления картинка-->

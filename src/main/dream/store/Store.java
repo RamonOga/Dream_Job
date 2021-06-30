@@ -2,11 +2,12 @@ package main.dream.store;
 
 import main.dream.model.Candidate;
 import main.dream.model.Post;
+import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.io.File;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Store {
@@ -16,6 +17,7 @@ public class Store {
     private static AtomicInteger CANDIDATE_ID = new AtomicInteger(3);
     private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
+    private final Map<Candidate, List<File>> photos = new ConcurrentHashMap<>();
 
     private Store() {
         posts.put(1, new Post(1, "Junior Java Job", "Ramon"));
@@ -58,6 +60,28 @@ public class Store {
         return candidates.get(id);
     }
 
+    public void deleteCandidate(String id) {
+        Candidate candidate = candidates.get(Integer.parseInt(id));
+        for (File file : photos.get(candidate)) {
+            file.delete();
+        }
+        candidates.remove(Integer.parseInt(id));
+    }
+
+    public void deletePost(String id) {
+        posts.remove(Integer.parseInt(id));
+    }
+
+    public void addCandidatePhoto(Candidate candidate, File file) {
+        if (!photos.containsKey(candidate)) {
+            List<File> photosList = new CopyOnWriteArrayList<>();
+            photosList.add(file);
+            photos.put(candidate, photosList);
+        } else {
+            photos.get(candidate).add(file);
+        }
+    }
+
     public Collection<Post> findAllPosts() {
         return posts.values();
     }
@@ -65,4 +89,6 @@ public class Store {
     public Collection<Candidate> findAllCandidates() {
         return candidates.values();
     }
+
+
 }
