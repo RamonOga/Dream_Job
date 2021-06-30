@@ -25,13 +25,15 @@
         <thead>
         <tr>
             <th>URL</th>
-            <th>View</th>
+            <th>action</th>
+            <th>view</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach items="${images}" var="image" varStatus="status">
             <tr valign="top">
-                <td><a href="<c:url value='/download?name=${image}'/>">Download</a></td>
+                <td><a href="<c:url value='/download?name=${image}&id='/><%=id%>">Download</a></td>
+                <td><a href="<c:url value='/delete?name=${image}&id='/><%=id%>">Удалить</a></td>
                 <td>
                     <img src="<c:url value='/download?name=${image}'/>" width="100px" height="100px"/>
                 </td>

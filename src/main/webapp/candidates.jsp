@@ -41,30 +41,32 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Названия</th>
-                        <th scope="col">Фото</th>
+                        <th scope="col">Названия кандидата</th>
+                        <th scope="col">Действия c кандидатом</th>
+                        <th scope="col">Фото кандидата</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${candidates}" var="can">
                         <tr>
                             <td>
-                                <!-- Это кнопка для редактивроания -->
-                                <a href='<c:url value="/candidate/edit.jsp?id=${can.id}"/>'>
-                                    <i class="fa fa-edit mr-3"></i>
-                                </a>
                                 <!-- Это имя кандидата-->
                                 <c:out value="${can.name}"/>
+                                <!-- Это кнопка для редактивроания -->
+                            </td>
+                            <td>
+                                <a href='<c:url value="/candidate/edit.jsp?id=${can.id}"/>'>
+                                    <i> Редактировать </i>
+                                </a>
+                                \
+                                <a href='<c:url value="/candidate/delete.jsp?id=${can.id}"/>'>
+                                    <i> Удалить </i>
+                                </a>
                             </td>
                             <td>
                                 <!-- Это кнопка для добавления картинка-->
                                 <a href='<c:url value="/upload?id=${can.id}"/>'>
-                                    <i> Добавить </i>
-                                </a>
-                                <h6> </h6>
-                                <!-- Это кнопка для удаления картинки-->
-                                <a href='<c:url value="/candidate/edit.jsp?id=${can.id}"/>'>
-                                    <i> Удалить </i>
+                                    <i> Добавить\Удалить фото </i>
                                 </a>
                             </td>
                         </tr>

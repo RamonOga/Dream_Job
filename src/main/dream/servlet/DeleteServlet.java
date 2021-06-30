@@ -8,21 +8,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class DownloadServlet extends HttpServlet {
+public class DeleteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
-        File downloadFile = null;
         for (File file : new File("e:\\projects\\files\\images" + File.separator + "user_" + req.getParameter("id")).listFiles()) {
             if (name.equals(file.getName())) {
-                downloadFile = file;
+                file.delete();
                 break;
             }
         }
-        resp.setContentType("application/octet-stream");
-        resp.setHeader("Content-Disposition", "attachment; filename=\"" + downloadFile.getName() + "\"");
-        try (FileInputStream stream = new FileInputStream(downloadFile)){
-            resp.getOutputStream().write(stream.readAllBytes());
-        }
+        resp.sendRedirect(req.getContextPath() + "/upload?id=" + req.getParameter("id"));
     }
 }
