@@ -1,7 +1,7 @@
 package main.dream.servlet;
 
 import main.dream.model.Candidate;
-import main.dream.store.Store;
+import main.dream.store.MemStore;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -58,7 +58,7 @@ public class UploadServlet extends HttpServlet {
                 folder.mkdir();
             }
 
-            Store store = Store.instOf();
+            MemStore store = MemStore.instOf();
             String id = req.getParameter("id");
             Candidate candidate = store.findCandidateById(Integer.parseInt(id));
 

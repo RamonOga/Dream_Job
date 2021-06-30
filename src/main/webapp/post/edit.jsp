@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="main.dream.store.Store" %>
+<%@ page import="main.dream.store.MemStore" %>
 <%@ page import="main.dream.model.Post" %>
 <!doctype html>
 <html lang="en">
@@ -32,7 +32,7 @@
     String id = request.getParameter("id");
     Post post = new Post(0, "");
     if (id != null) {
-        post = Store.instOf().findPostById(Integer.valueOf(id));
+        post = MemStore.instOf().findPostById(Integer.valueOf(id));
     }
 %>
 <div class="container pt-3">
