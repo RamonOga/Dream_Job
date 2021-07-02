@@ -25,7 +25,8 @@
         <thead>
         <tr>
             <th>URL</th>
-            <th>View</th>
+            <th>action</th>
+            <th>view</th>
         </tr>
         </thead>
         <tbody>
