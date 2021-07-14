@@ -1,7 +1,10 @@
 package main.dream.store;
 
+import main.dream.LogCreator;
 import main.dream.model.Candidate;
 import main.dream.model.Post;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.util.*;
@@ -11,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class MemStore {
 
-
+    static final Logger LOG = LogCreator.getLogger();
 
     private static final MemStore INST = new MemStore();
     private static AtomicInteger POST_ID = new AtomicInteger(0);
@@ -50,14 +53,18 @@ public class MemStore {
 
     public Post findPostById(Integer id) {
         if (!posts.containsKey(id)) {
-            throw new NoSuchElementException("Post with " + id + "id not found");
+            String err = "Post with " + id + "id not found";
+            LOG.warn(err);
+            throw new NoSuchElementException(err);
         }
         return posts.get(id);
     }
 
     public Candidate findCandidateById(Integer id) {
         if (!candidates.containsKey(id)) {
-            throw new NoSuchElementException("Post with " + id + "id not found");
+            String err = "Candidate with " + id + "id not found";
+            LOG.warn(err);
+            throw new NoSuchElementException("Candidate with " + id + "id not found");
         }
         return candidates.get(id);
     }

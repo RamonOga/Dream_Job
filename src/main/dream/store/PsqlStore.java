@@ -1,5 +1,6 @@
 package main.dream.store;
 
+import main.dream.LogCreator;
 import org.apache.commons.dbcp2.BasicDataSource;
 import main.dream.model.Candidate;
 import main.dream.model.Post;
@@ -13,11 +14,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
-import java.util.concurrent.Executor;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 public class PsqlStore implements Store {
 
     private final BasicDataSource pool = new BasicDataSource();
+    static private final Logger LOG = LogCreator.getLogger();
 
     private PsqlStore() {
         Properties cfg = new Properties();
@@ -62,7 +65,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Message from findAllPosts method ", e);
         }
         return posts;
     }
@@ -79,7 +82,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Message from findAllCandidates method ", e);
         }
         return rsl;
     }
@@ -105,7 +108,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Message from create method ", e);
         }
         return post;
     }
@@ -117,7 +120,7 @@ public class PsqlStore implements Store {
             ps.setString(1, post.getName());
             ps.setInt(2, post.getId());
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Message from update method ", e);
         }
     }
 
@@ -136,7 +139,7 @@ public class PsqlStore implements Store {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Message from findById method ", e);
         }
         return rsl;
     }
