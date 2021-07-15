@@ -6,7 +6,7 @@ import main.dream.model.Post;
 public class PsqlMain {
     public static void main(String[] args) {
         Store store = PsqlStore.instOf();
-        store.findById(99);
+        store.findCandidateById(99);
 
         for (Post post : store.findAllPosts()) {
             System.out.println(post.getId() + " " + post.getName());
@@ -15,7 +15,7 @@ public class PsqlMain {
         for (Candidate can : store.findAllCandidates()) {
             System.out.println(can.getId() + " " + can.getName());
         }
-        System.out.println(store.findById(2).getName());
+        System.out.println(store.findCandidateById(2).getName());
 
     }
 }

@@ -9,7 +9,15 @@ public interface Store {
 
     Collection<Candidate> findAllCandidates();
 
-    void save(Post post);
+    void savePost(Post post);
 
-    Post findById(int id);
+    void saveCandidate(Candidate candidate);
+
+    Post findPostById(Integer id);
+
+    Candidate findCandidateById(Integer id);
+
+    public void deleteCandidate(String id);
+
+    public void deletePost(String id);
 }
