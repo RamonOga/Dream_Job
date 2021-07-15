@@ -3,7 +3,6 @@ package main.dream.store;
 import main.dream.LogCreator;
 import main.dream.model.Candidate;
 import main.dream.model.Post;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
@@ -12,34 +11,37 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class MemStore {
+public class MemStore implements Store {
 
     static final Logger LOG = LogCreator.getLogger();
 
-    private static final MemStore INST = new MemStore();
+
     private static AtomicInteger POST_ID = new AtomicInteger(0);
     private static AtomicInteger CANDIDATE_ID = new AtomicInteger(0);
     private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
     private final Map<Candidate, List<File>> photos = new ConcurrentHashMap<>();
+    private static final MemStore INST = new MemStore();
 
     private MemStore() {
-        save(new Post(1, "Junior Java Job", "Ramon"));
-        save(new Post(2, "Middle Java Job", "Roman"));
-        save(new Post(3, "Senior Java Job", "Roman Markelov"));
-        save(new Candidate(1, "Junior Java"));
-        save(new Candidate(2, "Middle Java"));
-        save(new Candidate(3, "Senior Java"));
+        savePost(new Post(0, "Junior Java Job", "Ramon"));
+        savePost(new Post(0, "Middle Java Job", "Roman"));
+        savePost(new Post(0, "Senior Java Job", "Roman Markelov"));
+        saveCandidate(new Candidate(0, "Junior Java"));
+        saveCandidate(new Candidate(0, "Middle Java"));
+        saveCandidate(new Candidate(0, "Senior Java"));
     }
 
-    public void save(Post post) {
+    @Override
+    public void savePost(Post post) {
         if (post.getId() == 0) {
             post.setId(POST_ID.incrementAndGet());
         }
         posts.put(post.getId(), post);
     }
 
-    public void save(Candidate candidate) {
+    @Override
+    public void saveCandidate(Candidate candidate) {
         if (candidate.getId() == 0) {
             candidate.setId(CANDIDATE_ID.incrementAndGet());
         }
@@ -47,10 +49,11 @@ public class MemStore {
         photos.put(candidate, new CopyOnWriteArrayList<>());
     }
 
-    public static MemStore instOf() {
+    public static Store instOf() {
         return INST;
     }
 
+    @Override
     public Post findPostById(Integer id) {
         if (!posts.containsKey(id)) {
             String err = "Post with " + id + "id not found";
@@ -60,6 +63,7 @@ public class MemStore {
         return posts.get(id);
     }
 
+    @Override
     public Candidate findCandidateById(Integer id) {
         if (!candidates.containsKey(id)) {
             String err = "Candidate with " + id + "id not found";
@@ -69,6 +73,7 @@ public class MemStore {
         return candidates.get(id);
     }
 
+    @Override
     public void deleteCandidate(String id) {
         Candidate candidate = candidates.get(Integer.parseInt(id));
         List<File> fileList = photos.get(candidate);
@@ -79,10 +84,12 @@ public class MemStore {
         candidates.remove(Integer.parseInt(id));
     }
 
+    @Override
     public void deletePost(String id) {
         posts.remove(Integer.parseInt(id));
     }
 
+    @Override
     public void addCandidatePhoto(Candidate candidate, File file) {
         if (!photos.containsKey(candidate)) {
             List<File> photosList = new CopyOnWriteArrayList<>();
@@ -93,10 +100,12 @@ public class MemStore {
         }
     }
 
+    @Override
     public Collection<Post> findAllPosts() {
         return posts.values();
     }
 
+    @Override
     public Collection<Candidate> findAllCandidates() {
         return candidates.values();
     }

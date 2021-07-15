@@ -1,7 +1,8 @@
 package main.dream.servlet;
 
 import main.dream.model.Candidate;
-import main.dream.store.MemStore;
+import main.dream.store.PsqlStore;
+import main.dream.store.Store;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -23,7 +24,7 @@ public class UploadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<String> images = new ArrayList<>();
-        String folder = "e:\\projects\\files\\images"
+        String folder = "c:\\projects\\files\\images"
                 + File.separator
                 + "user_"
                 + req.getParameter("id");
@@ -31,7 +32,7 @@ public class UploadServlet extends HttpServlet {
         if (!folderFile.exists()) {
             folderFile.mkdir();
         }
-        for (File name : new File(folder).listFiles()) {
+        for (File name : folderFile.listFiles()) {
             if (!name.isDirectory()) {
                 images.add(name.getName());
             }
@@ -50,7 +51,7 @@ public class UploadServlet extends HttpServlet {
         ServletFileUpload upload = new ServletFileUpload(factory);
         try {
             List<FileItem> items = upload.parseRequest(req);
-            File folder = new File("e:\\projects\\files\\images"
+            File folder = new File("c:\\projects\\files\\images"
                                             + File.separator
                                             + "user_"
                                             + req.getParameter("id"));
@@ -58,7 +59,7 @@ public class UploadServlet extends HttpServlet {
                 folder.mkdir();
             }
 
-            MemStore store = MemStore.instOf();
+            Store store = PsqlStore.instOf();
             String id = req.getParameter("id");
             Candidate candidate = store.findCandidateById(Integer.parseInt(id));
 
