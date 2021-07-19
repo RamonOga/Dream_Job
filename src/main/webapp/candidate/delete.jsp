@@ -9,6 +9,8 @@
 <%@ page import="main.dream.store.MemStore" %>
 <%@ page import="main.dream.model.Post" %>
 <%@ page import="main.dream.model.Candidate" %>
+<%@ page import="main.dream.store.Store" %>
+<%@ page import="main.dream.store.PsqlStore" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -33,7 +35,7 @@
     String id = request.getParameter("id");
     String name = null;
     if (id != null) {
-        MemStore store = MemStore.instOf();
+        Store store = PsqlStore.instOf();
         name = store.findCandidateById(Integer.parseInt(id)).getName();
         store.deleteCandidate(request.getParameter("id"));
     }

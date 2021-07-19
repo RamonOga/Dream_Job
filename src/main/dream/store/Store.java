@@ -2,6 +2,7 @@ package main.dream.store;
 import main.dream.model.Candidate;
 import main.dream.model.Post;
 
+import java.io.File;
 import java.util.Collection;
 
 public interface Store {
@@ -20,4 +21,7 @@ public interface Store {
     public void deleteCandidate(String id);
 
     public void deletePost(String id);
+
+    public void addCandidatePhoto(Candidate candidate, File file);
+
 }

@@ -6,6 +6,7 @@ import main.dream.model.Candidate;
 import main.dream.model.Post;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -111,44 +112,10 @@ public class PsqlStore implements Store {
     }
 
     @Override
-    public Collection<Post> findAllPosts() {
-        List<Post> posts = new ArrayList<>();
-        try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM post")
-        ) {
-            try (ResultSet it = ps.executeQuery()) {
-                while (it.next()) {
-                    posts.add(new Post(it.getInt("id"), it.getString("name")));
-                }
-            }
-        } catch (Exception e) {
-            LOG.error("Message from findAllPosts method ", e);
-        }
-        return posts;
-    }
-
-    @Override
-    public Collection<Candidate> findAllCandidates() {
-        List<Candidate> rsl = new ArrayList<>();
-        try(Connection cn = pool.getConnection();
-            PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidate")
-        ) {
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    rsl.add(new Candidate(rs.getInt("id"), rs.getString("name")));
-                }
-            }
-        } catch (Exception e) {
-            LOG.error("Message from findAllCandidates method ", e);
-        }
-        return rsl;
-    }
-
-    @Override
     public void saveCandidate(Candidate candidate) {
         if (candidate.getId() == 0) {
             createCandidate(candidate);
-        } else {
+        } else if (findCandidateById(candidate.getId()) == null) {
             updateCandidate(candidate);
         }
     }
@@ -157,8 +124,34 @@ public class PsqlStore implements Store {
     public void savePost(Post post) {
         if (post.getId() == 0) {
             createPost(post);
-        } else {
+        } else if(findPostById(post.getId()) == null) {
             updatePost(post);
+        }
+    }
+
+    @Override
+    public void deleteCandidate(String id) {
+        try(Connection cn = pool.getConnection();
+            PreparedStatement ps = cn.prepareStatement("delete from candidate where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setInt(1, Integer.parseInt(id));
+            ps.execute();
+
+        } catch (Exception e) {
+            LOG.error("Message from deleteCandidate method ", e);
+        }
+    }
+
+    @Override
+    public void deletePost(String id) {
+        try(Connection cn = pool.getConnection();
+            PreparedStatement ps = cn.prepareStatement("delete from post where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setInt(1, Integer.parseInt(id));
+            ps.execute();
+
+        } catch (Exception e) {
+            LOG.error("Message from deletePost method ", e);
         }
     }
 
@@ -203,28 +196,41 @@ public class PsqlStore implements Store {
     }
 
     @Override
-    public void deleteCandidate(String id) {
-        try(Connection cn = pool.getConnection();
-            PreparedStatement ps = cn.prepareStatement("delete from candidate where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+    public Collection<Post> findAllPosts() {
+        List<Post> posts = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM post")
         ) {
-            ps.setInt(1, Integer.parseInt(id));
-            ps.execute();
-
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    posts.add(new Post(it.getInt("id"), it.getString("name")));
+                }
+            }
         } catch (Exception e) {
-            LOG.error("Message from deleteCandidate method ", e);
+            LOG.error("Message from findAllPosts method ", e);
         }
+        return posts;
     }
 
     @Override
-    public void deletePost(String id) {
+    public Collection<Candidate> findAllCandidates() {
+        List<Candidate> rsl = new ArrayList<>();
         try(Connection cn = pool.getConnection();
-            PreparedStatement ps = cn.prepareStatement("delete from post where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidate")
         ) {
-            ps.setInt(1, Integer.parseInt(id));
-            ps.execute();
-
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    rsl.add(new Candidate(rs.getInt("id"), rs.getString("name")));
+                }
+            }
         } catch (Exception e) {
-            LOG.error("Message from deletePost method ", e);
+            LOG.error("Message from findAllCandidates method ", e);
         }
+        return rsl;
+    }
+
+    @Override
+    public void addCandidatePhoto(Candidate candidate, File file) {
+
     }
 }

@@ -6,7 +6,7 @@ import main.dream.model.Post;
 public class PsqlMain {
     public static void main(String[] args) {
         Store store = PsqlStore.instOf();
-        store.findCandidateById(99);
+        System.out.println(store.findCandidateById(99));
 
         for (Post post : store.findAllPosts()) {
             System.out.println(post.getId() + " " + post.getName());

@@ -49,7 +49,7 @@ public class MemStore implements Store {
         photos.put(candidate, new CopyOnWriteArrayList<>());
     }
 
-    public static MemStore instOf() {
+    public static Store instOf() {
         return INST;
     }
 
@@ -89,6 +89,7 @@ public class MemStore implements Store {
         posts.remove(Integer.parseInt(id));
     }
 
+    @Override
     public void addCandidatePhoto(Candidate candidate, File file) {
         if (!photos.containsKey(candidate)) {
             List<File> photosList = new CopyOnWriteArrayList<>();
