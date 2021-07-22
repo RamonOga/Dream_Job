@@ -3,6 +3,7 @@ package main.dream.store;
 import main.dream.LogCreator;
 import main.dream.model.Candidate;
 import main.dream.model.Post;
+import main.dream.model.User;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
@@ -21,6 +22,7 @@ public class MemStore implements Store {
     private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
     private final Map<Candidate, List<File>> photos = new ConcurrentHashMap<>();
+    private final List<User> users = new CopyOnWriteArrayList<>();
     private static final MemStore INST = new MemStore();
 
     private MemStore() {
@@ -30,6 +32,10 @@ public class MemStore implements Store {
         saveCandidate(new Candidate(0, "Junior Java"));
         saveCandidate(new Candidate(0, "Middle Java"));
         saveCandidate(new Candidate(0, "Senior Java"));
+    }
+
+    public static Store instOf() {
+        return INST;
     }
 
     @Override
@@ -49,8 +55,15 @@ public class MemStore implements Store {
         photos.put(candidate, new CopyOnWriteArrayList<>());
     }
 
-    public static Store instOf() {
-        return INST;
+    @Override
+    public void addUser(User user) {
+        users.add(user);
+    }
+
+
+    @Override
+    public User findUserById(int id) {
+        return users.get(id);
     }
 
     @Override

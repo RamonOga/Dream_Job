@@ -13,3 +13,10 @@ CREATE TABLE photo (
     path TEXT,
     candidate_id integer references candidate(id) on delete cascade
 );
+
+CREATE TABLE user (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    email TEXT,
+    password TEXT
+);

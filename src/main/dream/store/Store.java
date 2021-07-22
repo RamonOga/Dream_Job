@@ -1,6 +1,7 @@
 package main.dream.store;
 import main.dream.model.Candidate;
 import main.dream.model.Post;
+import main.dream.model.User;
 
 import java.io.File;
 import java.util.Collection;
@@ -18,10 +19,16 @@ public interface Store {
 
     Candidate findCandidateById(Integer id);
 
-    public void deleteCandidate(String id);
+    void deleteCandidate(String id);
 
-    public void deletePost(String id);
+    void deletePost(String id);
 
-    public void addCandidatePhoto(Candidate candidate, File file);
+    void addCandidatePhoto(Candidate candidate, File file);
+
+    void addUser(User user);
+
+    User findUserById(int id);
+
+
 
 }

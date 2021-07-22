@@ -1,6 +1,7 @@
 package main.dream.store;
 
 import main.dream.LogCreator;
+import main.dream.model.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 import main.dream.model.Candidate;
 import main.dream.model.Post;
@@ -87,6 +88,20 @@ public class PsqlStore implements Store {
         return candidate;
     }
 
+    @Override
+    public void addUser(User user) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(name, email, password) VALUES ((?), (?), (?))",
+                                                            PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.execute();
+        } catch (Exception e) {
+            LOG.error("Message from addUser method ", e);
+        }
+    }
 
     private void updatePost(Post post) {
         try(Connection con = pool.getConnection();
@@ -154,6 +169,30 @@ public class PsqlStore implements Store {
         } catch (Exception e) {
             LOG.error("Message from deletePost method ", e);
         }
+    }
+
+    @Override
+    public User findUserById(int id) {
+        User rsl = null;
+        try(Connection cn = pool.getConnection();
+            PreparedStatement ps = cn.prepareStatement("select * from user where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setInt(1, id);
+            ps.execute();
+            try (ResultSet rs = ps.getResultSet()) {
+                if (rs.next()) {
+                    rsl = new User(rs.getInt("id"),
+                            rs.getString("name"),
+                            rs.getString("email"),
+                            rs.getString("password")
+                            );
+                }
+            }
+
+        } catch (Exception e) {
+            LOG.error("Message from findPostById method ", e);
+        }
+        return rsl;
     }
 
     @Override
