@@ -9,6 +9,7 @@
 <%@ page import="main.dream.store.MemStore" %>
 <%@ page import="main.dream.model.Post" %>
 <%@ page import="main.dream.store.PsqlStore" %>
+<%@ page import="main.dream.model.User" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -35,6 +36,8 @@
     if (id != null) {
         post = PsqlStore.instOf().findPostById(Integer.valueOf(id));
     }
+    HttpSession hs = request.getSession();
+    User user = (User) hs.getAttribute("user");
 %>
 <div class="container pt-3">
 
@@ -52,9 +55,16 @@
             <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
             </li>
+                 <% if (user == null) { %>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> | Выйти</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">Войти</a>
             </li>
+                <% } else { %>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">  <%=user.getName()%> | Выйти</a>
+            </li>
+                <% } %>
+
         </ul>
     </div>
 

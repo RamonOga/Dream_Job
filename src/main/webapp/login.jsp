@@ -26,6 +26,7 @@
     <title>Работа мечты</title>
 </head>
 <body>
+
 <div class="container pt-3">
 
     <div class="row">
@@ -44,11 +45,11 @@
                         <input type="text" class="form-control" name="password">
                     </div>
                     <button type="submit" class="btn btn-primary">Войти</button>
-                    <c:if test="${not empty error}">
+                   <c:if test="${not empty error}">
                         <div style="color:red; font-weight: bold; margin: 30px 0;">
                                 ${error}
                         </div>
-                    </c:if>
+                   </c:if>
                 </form>
             </div>
         </div>

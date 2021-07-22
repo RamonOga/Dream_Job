@@ -8,6 +8,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="main.dream.model.Candidate" %>
 <%@ page import="java.util.Collection" %>
+<%@ page import="main.dream.model.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!doctype html>
 <html lang="en">

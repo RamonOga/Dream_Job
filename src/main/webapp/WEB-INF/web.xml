@@ -5,38 +5,7 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-
   <display-name>Archetype Created Web Application</display-name>
-
-  <servlet>
-    <servlet-name>PostServlet</servlet-name>
-    <servlet-class>main.dream.servlet.PostServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>CandidateServlet</servlet-name>
-    <servlet-class>main.dream.servlet.CandidateServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>IndexServlet</servlet-name>
-    <servlet-class>main.dream.servlet.IndexServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>DownloadServlet</servlet-name>
-    <servlet-class>main.dream.servlet.DownloadServlet</servlet-class>
-  </servlet>
-
-  <servlet>
-    <servlet-name>UploadServlet</servlet-name>
-    <servlet-class>main.dream.servlet.UploadServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>DeleteServlet</servlet-name>
-    <servlet-class>main.dream.servlet.DeleteServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>AuthServlet</servlet-name>
-    <servlet-class>main.dream.servlet.AuthServlet</servlet-class>
-  </servlet>
 
   <filter>
     <filter-name>AuthFilter</filter-name>
@@ -48,6 +17,41 @@
     <url-pattern>*.do</url-pattern>
   </filter-mapping>
 
+
+  <servlet>
+    <servlet-name>PostServlet</servlet-name>
+    <servlet-class>main.dream.servlet.PostServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>CandidateServlet</servlet-name>
+    <servlet-class>main.dream.servlet.CandidateServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>IndexServlet</servlet-name>
+    <servlet-class>main.dream.servlet.IndexServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>DownloadServlet</servlet-name>
+    <servlet-class>main.dream.servlet.DownloadServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>UploadServlet</servlet-name>
+    <servlet-class>main.dream.servlet.UploadServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>DeleteServlet</servlet-name>
+    <servlet-class>main.dream.servlet.DeleteServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>AuthServlet</servlet-name>
+    <servlet-class>main.dream.servlet.AuthServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>AuthServlet</servlet-name>
     <url-pattern>/auth.do</url-pattern>
@@ -81,5 +85,4 @@
     <servlet-name>IndexServlet</servlet-name>
     <url-pattern>/index.do</url-pattern>
   </servlet-mapping>
-
 </web-app>
