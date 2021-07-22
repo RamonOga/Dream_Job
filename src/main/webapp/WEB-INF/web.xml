@@ -33,6 +33,15 @@
     <servlet-name>DeleteServlet</servlet-name>
     <servlet-class>main.dream.servlet.DeleteServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>AuthServlet</servlet-name>
+    <servlet-class>main.dream.servlet.AuthServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>AuthServlet</servlet-name>
+    <url-pattern>/auth.do</url-pattern>
+  </servlet-mapping>
 
   <servlet-mapping>
     <servlet-name>DeleteServlet</servlet-name>
