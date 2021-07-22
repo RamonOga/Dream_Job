@@ -12,7 +12,7 @@ public class DeleteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
-        for (File file : new File("e:\\projects\\files\\images" + File.separator + "user_" + req.getParameter("id")).listFiles()) {
+        for (File file : new File("c:\\projects\\files\\images" + File.separator + "user_" + req.getParameter("id")).listFiles()) {
             if (name.equals(file.getName())) {
                 file.delete();
                 break;
