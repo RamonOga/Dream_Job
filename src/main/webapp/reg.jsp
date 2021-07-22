@@ -1,9 +1,16 @@
-<!--
+<%@ page import="main.dream.model.User" %><%--
   Created by IntelliJ IDEA.
-  User: Admin
+  User: User
   Date: 22.07.2021
-  Time: 10:39
+  Time: 21:30
   To change this template use File | Settings | File Templates.
+--%>
+<!--
+Created by IntelliJ IDEA.
+User: Admin
+Date: 22.07.2021
+Time: 10:39
+To change this template use File | Settings | File Templates.
 -->
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!doctype html>
@@ -37,33 +44,33 @@
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Авторизация
+               Регистрация
             </div>
             <div class="card-body">
-                <form action="<%=request.getContextPath()%>/auth.do" method="post">
+                <form action="<%=request.getContextPath()%>/reg.do" method="post">
+                    <div class="form-group">
+                        <label>Имя</label>
+                        <input type="text" class="form-control" name="name">
+                    </div>
+
                     <div class="form-group">
                         <label>Почта</label>
                         <input type="text" class="form-control" name="email">
                     </div>
+
                     <div class="form-group">
                         <label>Пароль</label>
                         <input type="text" class="form-control" name="password">
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Войти</button>
+                    <button type="submit" class="btn btn-primary">Зарегистритроваться</button>
 
                     <% if (o == null) { %>
-
+                    Введите даннные
                     <% } else { %>
                     Неверный email
                     <% } %>
 
-                   <%--<c:if test="${not empty error}">
-                        <div style="color:red; font-weight: bold; margin: 30px 0;">
-                                ${error}
-                        </div>
-                   </c:if>--%>
-                        <a class="nav-link" href="<%=request.getContextPath()%>/reg.jsp">Зарегистрироваться</a>
                 </form>
             </div>
         </div>

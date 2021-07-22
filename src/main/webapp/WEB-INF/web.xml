@@ -17,7 +17,6 @@
     <url-pattern>*.do</url-pattern>
   </filter-mapping>
 
-
   <servlet>
     <servlet-name>PostServlet</servlet-name>
     <servlet-class>main.dream.servlet.PostServlet</servlet-class>
@@ -52,6 +51,19 @@
     <servlet-name>AuthServlet</servlet-name>
     <servlet-class>main.dream.servlet.AuthServlet</servlet-class>
   </servlet>
+
+  <servlet>
+    <servlet-name>RegServlet</servlet-name>
+    <servlet-class>main.dream.servlet.RegServlet</servlet-class>
+  </servlet>
+
+
+  <servlet-mapping>
+    <servlet-name>RegServlet</servlet-name>
+    <url-pattern>/reg.do</url-pattern>
+  </servlet-mapping>
+
+
   <servlet-mapping>
     <servlet-name>AuthServlet</servlet-name>
     <url-pattern>/auth.do</url-pattern>

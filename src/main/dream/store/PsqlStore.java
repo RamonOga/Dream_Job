@@ -91,7 +91,7 @@ public class PsqlStore implements Store {
     @Override
     public void addUser(User user) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(name, email, password) VALUES ((?), (?), (?))",
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO users(name, email, password) VALUES ((?), (?), (?))",
                                                             PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, user.getName());
@@ -175,7 +175,7 @@ public class PsqlStore implements Store {
     public User findUserById(int id) {
         User rsl = null;
         try(Connection cn = pool.getConnection();
-            PreparedStatement ps = cn.prepareStatement("select * from user where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+            PreparedStatement ps = cn.prepareStatement("select * from users where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setInt(1, id);
             ps.execute();
@@ -199,7 +199,7 @@ public class PsqlStore implements Store {
     public User findUserByEmail(String email) {
         User rsl = null;
         try(Connection cn = pool.getConnection();
-            PreparedStatement ps = cn.prepareStatement("select * from user where email = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+            PreparedStatement ps = cn.prepareStatement("select * from users where email = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, email);
             ps.execute();

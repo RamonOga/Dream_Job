@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.Collection;
 
 public interface Store {
+
     Collection<Post> findAllPosts();
 
     Collection<Candidate> findAllCandidates();
@@ -30,7 +31,4 @@ public interface Store {
     User findUserById(int id);
 
     User findUserByEmail(String email);
-
-
-
 }

@@ -14,7 +14,7 @@ CREATE TABLE photo (
     candidate_id integer references candidate(id) on delete cascade
 );
 
-CREATE TABLE user (
+CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name TEXT,
     email TEXT NOT NULL UNIQUE,
