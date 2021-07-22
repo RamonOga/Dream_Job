@@ -16,7 +16,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 
 public class PsqlStore implements Store {
 
@@ -95,6 +94,7 @@ public class PsqlStore implements Store {
         ) {
             ps.setString(1, post.getName());
             ps.setInt(2, post.getId());
+            ps.execute();
         } catch (Exception e) {
             LOG.error("Message from updatePost method ", e);
         }
@@ -106,6 +106,7 @@ public class PsqlStore implements Store {
         ) {
             ps.setString(1, candidate.getName());
             ps.setInt(2, candidate.getId());
+            ps.execute();
         } catch (Exception e) {
             LOG.error("Message from updateCandidate method ", e);
         }
@@ -115,7 +116,7 @@ public class PsqlStore implements Store {
     public void saveCandidate(Candidate candidate) {
         if (candidate.getId() == 0) {
             createCandidate(candidate);
-        } else if (findCandidateById(candidate.getId()) == null) {
+        } else if (findCandidateById(candidate.getId()) != null) {
             updateCandidate(candidate);
         }
     }
@@ -124,7 +125,7 @@ public class PsqlStore implements Store {
     public void savePost(Post post) {
         if (post.getId() == 0) {
             createPost(post);
-        } else if(findPostById(post.getId()) == null) {
+        } else if(findPostById(post.getId()) != null) {
             updatePost(post);
         }
     }
@@ -132,7 +133,7 @@ public class PsqlStore implements Store {
     @Override
     public void deleteCandidate(String id) {
         try(Connection cn = pool.getConnection();
-            PreparedStatement ps = cn.prepareStatement("delete from candidate where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+            PreparedStatement ps = cn.prepareStatement("delete from candidate cascade where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setInt(1, Integer.parseInt(id));
             ps.execute();
@@ -199,7 +200,7 @@ public class PsqlStore implements Store {
     public Collection<Post> findAllPosts() {
         List<Post> posts = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM post")
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM post order by id")
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
@@ -216,7 +217,7 @@ public class PsqlStore implements Store {
     public Collection<Candidate> findAllCandidates() {
         List<Candidate> rsl = new ArrayList<>();
         try(Connection cn = pool.getConnection();
-            PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidate")
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidate order by id")
         ) {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -231,6 +232,17 @@ public class PsqlStore implements Store {
 
     @Override
     public void addCandidatePhoto(Candidate candidate, File file) {
+        System.out.println("photo");
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO photo(path, candidate_id) VALUES ((?), (?))"
+                                                            , PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, file.getPath());
+            ps.setInt(2, candidate.getId());
+            ps.execute();
 
+        } catch (Exception e) {
+            LOG.error("Message from createCandidatePhoto method ", e);
+        }
     }
 }
