@@ -29,6 +29,8 @@ public interface Store {
 
     User findUserById(int id);
 
+    User findUserByEmail(String email);
+
 
 
 }

@@ -17,6 +17,6 @@ CREATE TABLE photo (
 CREATE TABLE user (
     id SERIAL PRIMARY KEY,
     name TEXT,
-    email TEXT,
+    email TEXT NOT NULL UNIQUE,
     password TEXT
 );

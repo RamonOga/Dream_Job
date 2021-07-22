@@ -190,7 +190,31 @@ public class PsqlStore implements Store {
             }
 
         } catch (Exception e) {
-            LOG.error("Message from findPostById method ", e);
+            LOG.error("Message from findUserById method ", e);
+        }
+        return rsl;
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        User rsl = null;
+        try(Connection cn = pool.getConnection();
+            PreparedStatement ps = cn.prepareStatement("select * from user where email = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, email);
+            ps.execute();
+            try (ResultSet rs = ps.getResultSet()) {
+                if (rs.next()) {
+                    rsl = new User(rs.getInt("id"),
+                            rs.getString("name"),
+                            rs.getString("email"),
+                            rs.getString("password")
+                    );
+                }
+            }
+
+        } catch (Exception e) {
+            LOG.error("Message from findUserByEmail method ", e);
         }
         return rsl;
     }
