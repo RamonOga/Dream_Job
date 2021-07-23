@@ -1,4 +1,5 @@
 package main.dream.store;
+import main.dream.exceptions.AlreadyEmailException;
 import main.dream.model.Candidate;
 import main.dream.model.Post;
 import main.dream.model.User;
@@ -27,7 +28,7 @@ public interface Store {
 
     void addCandidatePhoto(Candidate candidate, File file);
 
-    void addUser(User user);
+    void addUser(User user) throws AlreadyEmailException;
 
     User findUserById(int id);
 

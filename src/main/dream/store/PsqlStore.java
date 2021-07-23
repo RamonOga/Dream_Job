@@ -1,6 +1,7 @@
 package main.dream.store;
 
 import main.dream.LogCreator;
+import main.dream.exceptions.AlreadyEmailException;
 import main.dream.model.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 import main.dream.model.Candidate;
@@ -89,7 +90,7 @@ public class PsqlStore implements Store {
     }
 
     @Override
-    public void addUser(User user) {
+    public void addUser(User user) throws AlreadyEmailException {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement("INSERT INTO users(name, email, password) VALUES ((?), (?), (?))",
                                                             PreparedStatement.RETURN_GENERATED_KEYS)
@@ -100,6 +101,7 @@ public class PsqlStore implements Store {
             ps.execute();
         } catch (Exception e) {
             LOG.error("Message from addUser method ", e);
+            throw new AlreadyEmailException();
         }
     }
 

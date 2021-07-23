@@ -13,6 +13,7 @@ Time: 10:39
 To change this template use File | Settings | File Templates.
 -->
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -34,10 +35,6 @@ To change this template use File | Settings | File Templates.
 </head>
 <body>
 
-<%
-    HttpSession hs = request.getSession();
-    Object o = hs.getAttribute("error");
-%>
 
 <div class="container pt-3">
 
@@ -67,7 +64,7 @@ To change this template use File | Settings | File Templates.
 
                     <c:if test="${not empty error}">
                         <div style="color:red; font-weight: bold; margin: 30px 0;">
-                                ${error}
+                                Не верные даные регистрации.
                         </div>
                     </c:if>
 
