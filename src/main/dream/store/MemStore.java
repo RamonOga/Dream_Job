@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class MemStore implements Store {
 
@@ -138,5 +139,11 @@ public class MemStore implements Store {
         return candidates.values();
     }
 
-
+    @Override
+    public List<String> findAllUserEmails() {
+        List<String> rsl = new CopyOnWriteArrayList<>();
+        return users.stream()
+                .map(User::getEmail)
+                .collect(Collectors.toList());
+    }
 }

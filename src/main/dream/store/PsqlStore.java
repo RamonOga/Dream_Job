@@ -294,8 +294,24 @@ public class PsqlStore implements Store {
     }
 
     @Override
+    public List<String> findAllUserEmails() {
+        List<String> rsl = new ArrayList<>();
+        try(Connection cn = pool.getConnection();
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM users order by id")
+        ) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    rsl.add(rs.getString("email"));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Message from findAllCandidates method ", e);
+        }
+        return rsl;
+    }
+
+    @Override
     public void addCandidatePhoto(Candidate candidate, File file) {
-        System.out.println("photo");
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement("INSERT INTO photo(path, candidate_id) VALUES ((?), (?))"
                                                             , PreparedStatement.RETURN_GENERATED_KEYS)

@@ -52,17 +52,11 @@
 
                     <button type="submit" class="btn btn-primary">Войти</button>
 
-                    <% if (o == null) { %>
-
-                    <% } else { %>
-                    Неверный email
-                    <% } %>
-
-                   <%--<c:if test="${not empty error}">
+                   <c:if test="${not empty error}">
                         <div style="color:red; font-weight: bold; margin: 30px 0;">
                                 ${error}
                         </div>
-                   </c:if>--%>
+                   </c:if>
                         <a class="nav-link" href="<%=request.getContextPath()%>/reg.jsp">Зарегистрироваться</a>
                 </form>
             </div>

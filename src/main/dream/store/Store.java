@@ -5,6 +5,7 @@ import main.dream.model.User;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.List;
 
 public interface Store {
 
@@ -31,4 +32,6 @@ public interface Store {
     User findUserById(int id);
 
     User findUserByEmail(String email);
+
+    List<String> findAllUserEmails();
 }

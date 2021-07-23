@@ -1,11 +1,11 @@
 CREATE TABLE post (
     id SERIAL PRIMARY KEY,
-    name TEXT
+    name TEXT NOT NULL
 );
 
 CREATE TABLE candidate (
     id SERIAL PRIMARY KEY,
-    name TEXT
+    name TEXT NOT NULL
 );
 
 CREATE TABLE photo (
@@ -16,7 +16,7 @@ CREATE TABLE photo (
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    name TEXT,
+    name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
-    password TEXT
+    password TEXT NOT NULL
 );
