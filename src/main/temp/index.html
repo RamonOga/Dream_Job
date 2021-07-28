@@ -9,9 +9,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
         function validate() {
-            var fn = $('#firstName').val()
-            var ln = $('#lastName').val()
-            var des = $('#description').val()
+            const fn = $('#firstName').val()
+            const ln = $('#lastName').val()
+            const sex = $('#sex').val();
+            const des = $('#description').val()
+
             if (fn === '') {
                     alert('First name field must not be empty');
                 } else if ( ln === '') {
@@ -19,6 +21,12 @@
                 } else if (des === '') {
                     alert('Description field must not be empty');
                 }
+
+            $('#table tr:last').after('<tr><td>' + fn +'</td>'
+                                        + '<td>' + ln +'</td>'
+                                        + '<td>' + sex +'</td>'
+                                        + '<td>' + des +'</td></tr>'
+                                    );
             return false;
         }
     </script>
@@ -36,35 +44,26 @@
     </div>
     <div class="form-group">
         <label for="lastName">Last Name</label>
-        <input type="password" class="form-control" id="lastName">
+        <input type="text" class="form-control" id="lastName">
+    </div>
+    <div class="form-group">
+        <label for="description">Sex</label>
+        <input type="text" class="form-control" id="sex">
     </div>
     <div class="form-group">
         <label for="description">Description</label>
-        <input type="password" class="form-control" id="description">
+        <input type="text" class="form-control" id="description">
     </div>
 
-    <!--Checkbox -->
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-        <label class="form-check-label" for="exampleRadios1">
-            Female
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-        <label class="form-check-label" for="exampleRadios2">
-            Male
-        </label>
-    </div>
-    <!--Checkbox -->
+
+
     <button type="submit" class="btn btn-primary" onclick="return validate();">Submit</button>
 </form>
 
  <!--TABLE-->
-<table class="table table-striped">
+<table class="table table-striped" id ="table">
     <thead>
     <tr>
-        <th scope="col">#</th>
         <th scope="col">First Name</th>
         <th scope="col">Last Name</th>
         <th scope="col">Sex</th>
@@ -72,29 +71,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>Male</td>
-        <td>D1</td>
-    </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>Male</td>
-        <td>D2</td>
-    </tr>
-    <tr>
-        <th scope="row">3</th>
-        <td>Anna</td>
-        <td>Troshina</td>
-        <td>Female</td>
-        <td>D1</td>
-    </tr>
     </tbody>
 </table>
-
 </body>
 </html>
