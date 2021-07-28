@@ -23,25 +23,22 @@ import java.io.IOException;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-//@PowerMockIgnore({"javax.xml.*"})
-
+@PowerMockIgnore({"javax.xml.*", "javax.management.*"})
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(MemStore.class)
+@PrepareForTest(PsqlStore.class)
 public class PostServletTest {
 
     @Test
     public void whenCreatePost() throws IOException {
-        Store store = MemStore.instOf();
-
-        PowerMockito.mockStatic(MemStore.class);
-        PowerMockito.when(PsqlStore.instOf()).thenReturn(store);
-
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse resp = mock(HttpServletResponse.class);
+        Store store = MemStore.instOf();
 
-        PowerMockito.when(req.getParameter("id")).thenReturn("0");
-        PowerMockito.when(req.getParameter("name")).thenReturn("n");
-        PowerMockito.when(req.getParameter("description")).thenReturn("d");
+        PowerMockito.mockStatic(PsqlStore.class);
+
+        when(PsqlStore.instOf()).thenReturn(store);
+        when(req.getParameter("id")).thenReturn("0");
+        when(req.getParameter("name")).thenReturn("n");
 
         new PostServlet().doPost(req, resp);
 
@@ -49,5 +46,4 @@ public class PostServletTest {
         Assert.assertEquals( "n", result.getName());
         Assert.assertEquals("d" ,result.getDescription());
     }
-
 }
