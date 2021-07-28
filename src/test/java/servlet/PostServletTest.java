@@ -30,6 +30,6 @@ public class PostServletTest {
 
     @Test
     public void whenCreatePost() throws IOException {
-        PsqlStore.instOf();
+        PowerMockito.mockStatic(PsqlStore.class);
     }
 }
