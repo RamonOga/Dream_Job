@@ -23,7 +23,7 @@ import java.io.IOException;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-/*@PowerMockIgnore({"javax.xml.*"})*/
+//@PowerMockIgnore({"javax.xml.*"})
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(MemStore.class)
