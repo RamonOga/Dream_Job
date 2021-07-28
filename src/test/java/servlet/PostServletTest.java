@@ -23,13 +23,14 @@ import java.io.IOException;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@PowerMockIgnore({"javax.xml.*", "javax.management.*", "dream.store.*"})
+@PowerMockIgnore({"javax.xml.*", "javax.management.*"})
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(PsqlStore.class)
 public class PostServletTest {
 
     @Test
     public void whenCreatePost() throws IOException {
-        PowerMockito.mockStatic(PsqlStore.class);
+        MemStore.instOf();
+
     }
 }
