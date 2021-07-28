@@ -1,3 +1,6 @@
+package servlet;
+
+
 
 import dream.model.Post;
 import dream.servlet.PostServlet;
@@ -8,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -19,15 +23,17 @@ import java.io.IOException;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/*@PowerMockIgnore({"javax.xml.*"})*/
+
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(PsqlStore.class)
+@PrepareForTest(MemStore.class)
 public class PostServletTest {
 
     @Test
     public void whenCreatePost() throws IOException {
         Store store = MemStore.instOf();
 
-        PowerMockito.mockStatic(PsqlStore.class);
+        PowerMockito.mockStatic(MemStore.class);
         PowerMockito.when(PsqlStore.instOf()).thenReturn(store);
 
         HttpServletRequest req = mock(HttpServletRequest.class);

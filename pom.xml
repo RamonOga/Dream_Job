@@ -17,9 +17,46 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>14</maven.compiler.source>
     <maven.compiler.target>14</maven.compiler.target>
+
+    <mockito-core.version>3.8.0</mockito-core.version>
+    <powermock-module-junit4.version>2.0.2</powermock-module-junit4.version>
+    <junit.version>4.13.2</junit.version>
   </properties>
 
+
+
   <dependencies>
+
+    <!-- MOCKITO -->
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${mockito-core.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- POWERMOCK -->
+    <dependency>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-module-junit4</artifactId>
+      <version>${powermock-module-junit4.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-api-mockito2</artifactId>
+      <version>${powermock-module-junit4.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- JUNIT -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
 
 
 
@@ -70,37 +107,9 @@
       <version>2.14.1</version>
     </dependency>
 
-   <!-- <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <version>3.8.0</version>
-      <scope>test</scope>
-    </dependency>
 
-    &lt;!&ndash; POWERMOCK &ndash;&gt;
-    <dependency>
-      <groupId>org.powermock</groupId>
-      <artifactId>powermock-module-junit4</artifactId>
-      <version>2.0.2</version>
-      <scope>test</scope>
-    </dependency>
 
-    <dependency>
-      <groupId>org.powermock</groupId>
-      <artifactId>powermock-api-mockito2</artifactId>
-      <version>2.0.2</version>
-      <scope>test</scope>
-    </dependency>
-
-    &lt;!&ndash; JUNIT &ndash;&gt;
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.2</version>
-      <scope>test</scope>
-    </dependency>-->
-
-    <dependency>
+    <!--<dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.13.2</version>
@@ -110,7 +119,7 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <version>2.23.4</version>
+      <version>2.28.2</version>
       <scope>test</scope>
     </dependency>
 
@@ -125,7 +134,7 @@
       <artifactId>powermock-api-mockito2</artifactId>
       <version>2.0.2</version>
       <scope>test</scope>
-    </dependency>
+    </dependency>-->
 
   </dependencies>
 
