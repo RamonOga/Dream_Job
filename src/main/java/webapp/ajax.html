@@ -22,34 +22,57 @@
 
 <script>
     function sendGreeting() {
-        const email = $('#email').val();
         $.ajax({
-            type: 'GET',
+            type: 'POST',
+            crossdomain: true,
             url: 'http://localhost:8080/Dream_Job/greet',
-            data: 'name=' + email,
-            dataType: 'text'
-        }).done(function(data) {
-            $('#emailForm div:first').before(email)
-        }).fail(function(err){
-            alert(err);
+            data: JSON.stringify({
+                name: $('#exampleInputEmail1').val()
+            }),
+            dataType: 'json'
+        }).done(function (data) {
+            $('#emailList li:last').append(`<li>${data.name}</li>`)
+        }).fail(function (err) {
+            console.log(err);
         });
     }
 </script>
 
-<body>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: 'GET',
+            crossdomain: true,
+            url: 'http://localhost:8080/Dream_Job/greet',
+            dataType: 'json'
+        }).done(function (data) {
+            for (var email of data) {
+                $('#emailList li:last').append(`<li>${email.name}</li>`)
+            }
+        }).fail(function (err) {
+            console.log(err);
+        });
+    });
+</script>
 
-
-
-<div class="container" id="emailForm">
+ <body>
+  <div class="container">
     <form>
         <div class="form-group">
-            <label for="email" style="font-weight: bold">Email address</label>
-            <input type="text" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
         </div>
-        <button type="reset" class="btn btn-primary" onclick="sendGreeting()"> Submit </button>
+        <button type="button" class="btn btn-primary" onclick="sendGreeting()"> Submit </button>
     </form>
-</div>
-</body>
+    <br>
+    emails:
+    <ul id="emailList">
+        <li></li>
+    </ul>
+  </div>
+
+
+ </body>
 </html>
 
 
