@@ -19,7 +19,7 @@
 
   <filter-mapping>
     <filter-name>CORSFilter</filter-name>
-    <url-pattern>/greet</url-pattern>
+    <url-pattern>/*</url-pattern>
   </filter-mapping>
 
   <filter-mapping>

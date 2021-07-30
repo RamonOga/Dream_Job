@@ -24,7 +24,6 @@
     function sendGreeting() {
         $.ajax({
             type: 'POST',
-            crossdomain: true,
             url: 'http://localhost:8080/Dream_Job/greet',
             data: JSON.stringify({
                 name: $('#exampleInputEmail1').val()
@@ -42,7 +41,6 @@
     $(document).ready(function () {
         $.ajax({
             type: 'GET',
-            crossdomain: true,
             url: 'http://localhost:8080/Dream_Job/greet',
             dataType: 'json'
         }).done(function (data) {
