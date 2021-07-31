@@ -1,6 +1,7 @@
 package dream.store;
 import dream.exceptions.AlreadyEmailException;
 import dream.model.Candidate;
+import dream.model.City;
 import dream.model.Post;
 import dream.model.User;
 
@@ -13,6 +14,10 @@ public interface Store {
     Collection<Post> findAllPosts();
 
     Collection<Candidate> findAllCandidates();
+
+    List<String> findAllUserEmails();
+
+    List<City> findAllCites();
 
     void savePost(Post post);
 
@@ -34,5 +39,4 @@ public interface Store {
 
     User findUserByEmail(String email);
 
-    List<String> findAllUserEmails();
 }

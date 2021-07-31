@@ -2,6 +2,7 @@ package dream.store;
 
 import dream.LogCreator;
 import dream.exceptions.AlreadyEmailException;
+import dream.model.City;
 import dream.model.User;
 import dream.model.Candidate;
 import dream.model.Post;
@@ -309,6 +310,23 @@ public class PsqlStore implements Store {
             }
         } catch (Exception e) {
             LOG.error("Message from findAllCandidates method ", e);
+        }
+        return rsl;
+    }
+
+    @Override
+    public List<City> findAllCites() {
+        List<City> rsl = new ArrayList<>();
+        try(Connection cn = pool.getConnection();
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM city order by name")
+        ) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    rsl.add(new City(rs.getString("name")));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Message from findAllCites method ", e);
         }
         return rsl;
     }

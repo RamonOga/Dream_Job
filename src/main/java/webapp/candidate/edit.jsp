@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: User
-  Date: 16.06.2021
-  Time: 19:36
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="dream.store.PsqlStore" %>
 <%@ page import="dream.model.Post" %>
@@ -26,10 +19,28 @@
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Работа мечты</title>
 </head>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8080/Dream_Job/city',
+            dataType: 'json'
+        }).done(function (data) {
+            for (var city of data) {
+                $('#cityList option:last').append(`<option>${city}</option>`)
+            }
+        }).fail(function (err) {
+            console.log(err);
+        });
+    });
+</script>
 <body>
+
+
 <%
     String id = request.getParameter("id");
     Candidate candidate = new Candidate(0,"");
@@ -49,18 +60,18 @@
                 <a class="nav-link" href="<%=request.getContextPath()%>/candidates.do">Кандидаты</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/webapp/post/edit.jsp">Добавить вакансию</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/post/edit.jsp">Добавить вакансию</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/webapp/candidate/edit.jsp">Добавить кандидата</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
             </li>
                <% if (user == null) { %>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/webapp/login.jsp">Войти</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">Войти</a>
             </li>
                 <% } else { %>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/webapp/login.jsp">  <%=user.getName()%> | Выйти</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">  <%=user.getName()%> | Выйти</a>
             </li>
                 <% } %>
 
@@ -83,9 +94,17 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
+                <div class="form-group" >
+                    <label for="cityList">Город</label>
+                    <select class="form-control" id="cityList">
+                        <option> </option>
+                    </select>
+                </div>
             </div>
         </div>
+
     </div>
+
 </div>
 </body>
 </html>

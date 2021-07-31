@@ -2,6 +2,7 @@ package dream.store;
 
 import dream.LogCreator;
 import dream.model.Candidate;
+import dream.model.City;
 import dream.model.Post;
 import dream.model.User;
 
@@ -24,7 +25,9 @@ public class MemStore implements Store {
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
     private final Map<Candidate, List<File>> photos = new ConcurrentHashMap<>();
     private final List<User> users = new CopyOnWriteArrayList<>();
+    private final List<City> cites = new CopyOnWriteArrayList<>();
     private static final MemStore INST = new MemStore();
+
 
     private MemStore() {
         savePost(new Post(0, "Junior Java Job", "Ramon"));
@@ -106,7 +109,6 @@ public class MemStore implements Store {
     public void deleteCandidate(String id) {
         Candidate candidate = candidates.get(Integer.parseInt(id));
         List<File> fileList = photos.get(candidate);
-        System.out.println(fileList);
         for (File file : fileList ) {
             file.delete();
         }
@@ -145,5 +147,10 @@ public class MemStore implements Store {
         return users.stream()
                 .map(User::getEmail)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<City> findAllCites() {
+        return cites;
     }
 }

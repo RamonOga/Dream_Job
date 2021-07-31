@@ -3,9 +3,16 @@ CREATE TABLE post (
     name TEXT NOT NULL
 );
 
-CREATE TABLE candidate (
+
+CREATE TABLE city (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL
+);
+
+CREATE TABLE candidate (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    city_id integer references city(id) on delete cascade
 );
 
 CREATE TABLE photo (

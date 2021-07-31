@@ -1,10 +1,3 @@
-<!--
-  Created by IntelliJ IDEA.
-  User: Admin
-  Date: 22.07.2021
-  Time: 10:39
-  To change this template use File | Settings | File Templates.
--->
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!doctype html>
@@ -27,6 +20,18 @@
     <title>Работа мечты</title>
 </head>
 <body>
+<script>
+    function validate() {
+        const email = $('#email').val();
+        const password = $('#password').val();
+        if (email === '') {
+            alert("Email field must not be empty");
+        } else if (password === '') {
+            alert("Password field must not be empty");
+        }
+        return false;
+    }
+</script>
 
 <div class="container pt-3">
 
@@ -36,17 +41,17 @@
                 Авторизация
             </div>
             <div class="card-body">
-                <form action="<%=request.getContextPath()%>/auth.do" method="post">
+                <form action="<%=request.getContextPath()%>/auth.do" method="post" req>
                     <div class="form-group">
-                        <label>Почта</label>
-                        <input type="text" class="form-control" name="email">
+                        <label for="email">Почта</label>
+                        <input type="text" class="form-control" id="email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label>Пароль</label>
-                        <input type="text" class="form-control" name="password">
+                        <label for="password">Пароль</label>
+                        <input type="text" class="form-control" id="password" name="password" required>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Войти</button>
+                    <button type="submit" class="btn btn-primary" onclick="validate()">Войти</button>
 
                    <c:if test="${not empty error}">
                         <div style="color:red; font-weight: bold; margin: 30px 0;">
