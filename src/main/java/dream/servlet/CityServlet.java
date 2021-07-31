@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CityServlet extends HttpServlet {
 
@@ -23,10 +22,9 @@ public class CityServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<String> cList = cites.stream().map(City::getName).collect(Collectors.toList());
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
-        String json = GSON.toJson(cList);
+        String json = GSON.toJson(cites);
         output.write(json.getBytes(StandardCharsets.UTF_8));
         output.flush();
         output.close();

@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Работа мечты</title>
 </head>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
 
 <script>
     $(document).ready(function () {
@@ -31,7 +32,7 @@
             dataType: 'json'
         }).done(function (data) {
             for (var city of data) {
-                $('#cityList option:last').append(`<option>${city}</option>`)
+                $('#cityList option:last').append(`<li>${city.name}</li>`)
             }
         }).fail(function (err) {
             console.log(err);
@@ -94,7 +95,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
-                <div class="form-group" >
+                <div class="form-group"  >
                     <label for="cityList">Город</label>
                     <select class="form-control" id="cityList">
                         <option> </option>
