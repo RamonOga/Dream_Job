@@ -21,7 +21,6 @@ public class GreetingServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        System.out.println("doPost");
         Email email = GSON.fromJson(req.getReader(), Email.class);
         emails.add(email);
         resp.setContentType("application/json; charset=utf-8");
@@ -34,7 +33,6 @@ public class GreetingServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        System.out.println("doGet");
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
         String json = GSON.toJson(emails);

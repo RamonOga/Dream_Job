@@ -4,13 +4,11 @@ import dream.LogCreator;
 import dream.exceptions.AlreadyEmailException;
 import dream.model.User;
 import dream.store.PsqlStore;
-import dream.store.Store;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class RegServlet extends HttpServlet {

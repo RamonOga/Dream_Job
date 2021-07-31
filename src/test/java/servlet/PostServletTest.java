@@ -30,7 +30,7 @@ public class PostServletTest {
 
     @Test
     public void whenCreatePost() throws IOException {
-        MemStore.instOf();
+        /*MemStore.instOf();*/
 
     }
 }

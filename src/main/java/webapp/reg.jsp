@@ -1,17 +1,3 @@
-<%@ page import="main.dream.model.User" %><%--
-  Created by IntelliJ IDEA.
-  User: User
-  Date: 22.07.2021
-  Time: 21:30
-  To change this template use File | Settings | File Templates.
---%>
-<!--
-Created by IntelliJ IDEA.
-User: Admin
-Date: 22.07.2021
-Time: 10:39
-To change this template use File | Settings | File Templates.
--->
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!doctype html>
@@ -35,6 +21,21 @@ To change this template use File | Settings | File Templates.
 </head>
 <body>
 
+<script>
+    function validate() {
+        const name = $('#name').val();
+        const email = $('#email').val();
+        const password = $('#password').val();
+        if (name === '') {
+            alert("Name field must not be empty")
+        } else if (email === '') {
+            alert("Email field must not be empty")
+        } else if (password === '') {
+            alert("Password field must not be empty")
+        }
+        return false;
+    }
+</script>
 
 <div class="container pt-3">
 
@@ -46,25 +47,25 @@ To change this template use File | Settings | File Templates.
             <div class="card-body">
                 <form action="<%=request.getContextPath()%>/reg.do" method="post">
                     <div class="form-group">
-                        <label>Имя</label>
-                        <input type="text" class="form-control" name="name" required>
+                        <label for="name">Имя</label>
+                        <input type="text" class="form-control" name="name" id="name" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Почта</label>
-                        <input type="text" class="form-control" name="email" required>
+                        <label for="name">Почта</label>
+                        <input type="text" class="form-control" name="email" id="email" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Пароль</label>
-                        <input type="text" class="form-control" name="password" required>
+                        <label for="password">Пароль</label>
+                        <input type="text" class="form-control" name="password" id="password" required>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Зарегистритроваться</button>
+                    <button type="submit" class="btn btn-primary" onclick="validate()">Зарегистритроваться</button>
 
                     <c:if test="${not empty error}">
                         <div style="color:red; font-weight: bold; margin: 30px 0;">
-                                Не верные даные регистрации.
+                                Не верные данные регистрации.
                         </div>
                     </c:if>
 

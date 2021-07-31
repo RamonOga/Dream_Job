@@ -36,19 +36,19 @@ User user = (User) hs.getAttribute("user");
                 <a class="nav-link" href="<%=request.getContextPath()%>/candidates.do">Кандидаты</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/webapp/candidate/edit.jsp">Добавить кандидата</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/webapp/post/edit.jsp">Добавить вакансию</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/post/edit.jsp">Добавить вакансию</a>
             </li>
             <% if (user == null) { %>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/webapp/login.jsp">Войти</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">Войти</a>
             </li>
             <% } else { %>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/webapp/login.jsp">  <%=user.getName()%> | Выйти</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">  <%=user.getName()%> | Выйти</a>
             </li>
             <% } %>
         </ul>
