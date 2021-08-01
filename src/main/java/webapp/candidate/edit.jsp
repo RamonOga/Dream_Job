@@ -29,13 +29,14 @@
         $.ajax({
             type: 'GET',
             url: 'http://localhost:8080/Dream_Job/city',
-            dataType: 'json'
-        }).done(function (data) {
-            for (var city of data) {
-                $('#cityList option:last').append(`<li>${city.name}</li>`)
+            dataType: 'json',
+            success: function(data) {
+            let cities = '';
+            for (let i = 0; i < data.length; i++ ) {
+                cities += "<option value="+data[i]['id'] + ">" + data[i]['name'] + "</option>";
             }
-        }).fail(function (err) {
-            console.log(err);
+            $('#cityList').html(cities);
+        }
         });
     });
 </script>
@@ -93,14 +94,16 @@
                         <label>Имя</label>
                         <input type="text" class="form-control" name="name" value ="<%=candidate.getName()%>">
                     </div>
+
+                    <div class="form-group"  >
+                        <label for="cityList">Город</label>
+                        <select class="form-control" id="cityList" name="cityList">
+                            <option> </option>
+                        </select>
+                    </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
-                <div class="form-group"  >
-                    <label for="cityList">Город</label>
-                    <select class="form-control" id="cityList">
-                        <option> </option>
-                    </select>
-                </div>
+
             </div>
         </div>
 
