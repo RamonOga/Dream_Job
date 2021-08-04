@@ -18,10 +18,9 @@ public class CityServlet extends HttpServlet {
 
     private static final Gson GSON = new GsonBuilder().create();
 
-    private static final List<City> cites = PsqlStore.instOf().findAllCites();
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<City> cites = PsqlStore.instOf().findAllCites();
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
         String json = GSON.toJson(cites);

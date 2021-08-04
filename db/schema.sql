@@ -27,3 +27,9 @@ CREATE TABLE users (
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL
 );
+
+CREATE TABLE city (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL
+);
+
