@@ -3,6 +3,8 @@
 <%@ page import="dream.model.Post" %>
 <%@ page import="dream.model.Candidate" %>
 <%@ page import="dream.model.User" %>
+<%@ page import="dream.model.CandidateVisitors" %>
+<%@ page import="dream.store.Store" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -46,9 +48,12 @@
 <%
     String id = request.getParameter("id");
     Candidate candidate = new Candidate(0,"");
+    CandidateVisitors visitors = new CandidateVisitors(0,candidate,0);
+    Store store = PsqlStore.instOf();
     if (id != null) {
         candidate = PsqlStore.instOf().findCandidateById(Integer.parseInt(id));
-        // PsqlStore.instOf().incrementVisitors();
+        store.incrementVisitors(candidate);
+        visitors = store.findCandidateVisitorsByCandidateId(candidate);
     }
     HttpSession hs = request.getSession();
     User user = (User) hs.getAttribute("user");
@@ -86,7 +91,7 @@
                 <% if (id == null) { %>
                 Новый кандидат.
                 <% } else { %>
-                Редактирование вакансии.
+                Редактирование вакансии. <br> Количество просмотров кандидата = <%=visitors.getCount()%>
                 <% } %>
             </div>
             <div class="card-body">

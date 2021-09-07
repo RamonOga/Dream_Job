@@ -33,3 +33,9 @@ CREATE TABLE city (
     name TEXT NOT NULL
 );
 
+CREATE TABLE candidate_visitors (
+    id SERIAL PRIMARY KEY,
+    count integer,
+    candidate_id integer references candidate(id) on delete cascade
+);
+

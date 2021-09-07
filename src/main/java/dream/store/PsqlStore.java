@@ -2,10 +2,7 @@ package dream.store;
 
 import dream.LogCreator;
 import dream.exceptions.AlreadyEmailException;
-import dream.model.City;
-import dream.model.User;
-import dream.model.Candidate;
-import dream.model.Post;
+import dream.model.*;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 
@@ -15,11 +12,10 @@ import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
+
 import org.apache.logging.log4j.Logger;
+
 
 public class PsqlStore implements Store {
 
@@ -115,6 +111,29 @@ public class PsqlStore implements Store {
         }
     }
 
+    private CandidateVisitors addCandidateVisitors(Candidate candidate) {
+        CandidateVisitors visitors = new CandidateVisitors(0, candidate, 0);
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate_visitors(count, candidate_id) VALUES ((?), (?))",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setInt(1, visitors.getCount());
+            ps.setInt(2, candidate.getId());
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    visitors.setId(id.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Message from  addCandidateVisitors method ", e);
+        }
+        if (visitors.getId() == 0) {
+            throw new NoSuchElementException("something went wrong in addCandidateVisitors()");
+        }
+        return visitors;
+    }
+
 
     @Override
     public void addUser(User user) throws AlreadyEmailException {
@@ -136,7 +155,7 @@ public class PsqlStore implements Store {
     public void saveCandidate(Candidate candidate) {
         if (candidate.getId() == 0) {
             createCandidate(candidate);
-            //addCandidateVisitors(candidate);
+            addCandidateVisitors(candidate);
         } else if (findCandidateById(candidate.getId()) != null) {
             updateCandidate(candidate);
         }
@@ -346,5 +365,46 @@ public class PsqlStore implements Store {
         } catch (Exception e) {
             LOG.error("Message from createCandidatePhoto method ", e);
         }
+    }
+
+    @Override
+    public void incrementVisitors(Candidate candidate) {
+        try(Connection con = pool.getConnection();
+            PreparedStatement ps = con.prepareStatement("update candidate_visitors" +
+                    " set count = count + 1 " +
+                    "where candidate_id = (?)")
+        ) {
+            ps.setInt(1, candidate.getId());
+            ps.execute();
+        } catch (Exception e) {
+            LOG.error("Message from incrementVisitors method ", e);
+        }
+    }
+
+    @Override
+    public CandidateVisitors findCandidateVisitorsByCandidateId(Candidate candidate) {
+        CandidateVisitors visitors = null;
+        try(Connection cn = pool.getConnection();
+            PreparedStatement ps = cn.prepareStatement("select * from candidate_visitors " +
+                            "where candidate_id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setInt(1, candidate.getId());
+            ps.execute();
+            try (ResultSet rs = ps.getResultSet()) {
+                if (rs.next()) {
+                    visitors = new CandidateVisitors(rs.getInt("id"),
+                            candidate,
+                            rs.getInt("count"));
+                }
+            }
+
+        } catch (Exception e) {
+            LOG.error("Message from findCandidateVisitorsByCandidateId method ", e);
+        }
+
+        if (visitors == null) {
+            throw new NoSuchElementException("something went wrong in findCandidateVisitorsByCandidateId()");
+        }
+        return visitors;
     }
 }

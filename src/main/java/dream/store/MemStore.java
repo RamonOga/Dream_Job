@@ -1,10 +1,7 @@
 package dream.store;
 
 import dream.LogCreator;
-import dream.model.Candidate;
-import dream.model.City;
-import dream.model.Post;
-import dream.model.User;
+import dream.model.*;
 
 import org.apache.logging.log4j.Logger;
 import java.io.File;
@@ -152,5 +149,21 @@ public class MemStore implements Store {
     @Override
     public List<City> findAllCites() {
         return cites;
+    }
+
+
+    /**
+     *
+     * Как я понял основная задача была реализовать функционал работающий с SQL базой.
+     * Поэтому не стал реализовывать методы в MemStore
+     */
+    @Override
+    public void incrementVisitors(Candidate candidate) {
+
+    }
+
+    @Override
+    public CandidateVisitors findCandidateVisitorsByCandidateId(Candidate candidate) {
+        return null;
     }
 }

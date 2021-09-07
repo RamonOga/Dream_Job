@@ -1,13 +1,15 @@
 package dream.store;
 import dream.exceptions.AlreadyEmailException;
-import dream.model.Candidate;
-import dream.model.City;
-import dream.model.Post;
-import dream.model.User;
+import dream.model.*;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.List;
+
+/**
+ *
+ * Данный интерфейс желательно разделить на несколько. Но цель задания была в другом.
+ */
 
 public interface Store {
 
@@ -38,5 +40,9 @@ public interface Store {
     User findUserById(int id);
 
     User findUserByEmail(String email);
+
+    void incrementVisitors(Candidate candidate);
+
+    CandidateVisitors findCandidateVisitorsByCandidateId(Candidate candidate);
 
 }
