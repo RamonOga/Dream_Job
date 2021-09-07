@@ -123,9 +123,6 @@
     <servlet-name>CandidateServlet</servlet-name>
     <url-pattern>/candidates.do</url-pattern>
   </servlet-mapping>
-  
-  <servlet-mapping>
-    <servlet-name>IndexServlet</servlet-name>
-    <url-pattern>/index.do</url-pattern>
-  </servlet-mapping>
+
+
 </web-app>

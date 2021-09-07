@@ -91,22 +91,6 @@ public class PsqlStore implements Store {
         return candidate;
     }
 
-    @Override
-    public void addUser(User user) throws AlreadyEmailException {
-        try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO users(name, email, password) VALUES ((?), (?), (?))",
-                                                            PreparedStatement.RETURN_GENERATED_KEYS)
-        ) {
-            ps.setString(1, user.getName());
-            ps.setString(2, user.getEmail());
-            ps.setString(3, user.getPassword());
-            ps.execute();
-        } catch (Exception e) {
-            LOG.error("Message from addUser method ", e);
-            throw new AlreadyEmailException();
-        }
-    }
-
     private void updatePost(Post post) {
         try(Connection con = pool.getConnection();
             PreparedStatement ps = con.prepareStatement("update post set name = (?) where id = (?)")
@@ -131,10 +115,28 @@ public class PsqlStore implements Store {
         }
     }
 
+
+    @Override
+    public void addUser(User user) throws AlreadyEmailException {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO users(name, email, password) VALUES ((?), (?), (?))",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.execute();
+        } catch (Exception e) {
+            LOG.error("Message from addUser method ", e);
+            throw new AlreadyEmailException();
+        }
+    }
+
     @Override
     public void saveCandidate(Candidate candidate) {
         if (candidate.getId() == 0) {
             createCandidate(candidate);
+            //addCandidateVisitors(candidate);
         } else if (findCandidateById(candidate.getId()) != null) {
             updateCandidate(candidate);
         }

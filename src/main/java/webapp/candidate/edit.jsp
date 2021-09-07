@@ -48,6 +48,7 @@
     Candidate candidate = new Candidate(0,"");
     if (id != null) {
         candidate = PsqlStore.instOf().findCandidateById(Integer.parseInt(id));
+        // PsqlStore.instOf().incrementVisitors();
     }
     HttpSession hs = request.getSession();
     User user = (User) hs.getAttribute("user");

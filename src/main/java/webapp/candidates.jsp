@@ -73,11 +73,11 @@
                                 <!-- Это кнопка для редактивроания -->
                             </td>
                             <td>
-                                <a href='<c:url value="/webapp/candidate/edit.jsp?id=${can.id}"/>'>
+                                <a href='<c:url value="/candidate/edit.jsp?id=${can.id}"/>'>
                                     <i> Редактировать </i>
                                 </a>
                                 \
-                                <a href='<c:url value="/webapp/candidate/delete.jsp?id=${can.id}"/>'>
+                                <a href='<c:url value="/candidate/delete.jsp?id=${can.id}"/>'>
                                     <i> Удалить </i>
                                 </a>
                             </td>
